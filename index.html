@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TONIC · 피아노치는 교회오빠 — 음악교과서 편집자가 만드는 실전 음악 교재와 악보</title>
+<meta name="description" content="음악교과서 편집자 출신이 만드는 실전 음악 교재. 독학 재즈화성학, 어드밴스드 CCM 화성학, 코드표·스케일표 등 독학자와 예배 반주자를 위한 토닉의 교재와 디지털 악보." />
+<meta name="author" content="TONIC" />
+<meta name="theme-color" content="#F6F3EC" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="TONIC · 피아노치는 교회오빠" />
+<meta property="og:description" content="음악교과서 편집자가 만드는 실전 음악 교재와 악보. Since 2011." />
+<meta property="og:locale" content="ko_KR" />
+<meta name="twitter:card" content="summary" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%2317202A'/%3E%3Ctext x='32' y='45' font-family='Helvetica,Arial,sans-serif' font-weight='700' font-size='36' fill='%23F6F3EC' text-anchor='middle'%3ET%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
+<style>
+  /* ── 토큰 ───────────────────────────────────────────── */
+  :root{
+    --ivory:#F6F3EC;
+    --paper:#FBF9F4;
+    --sand:#EBE6DA;
+    --ink:#17202A;
+    --ink-70:#3A444F;
+    --ink-50:#5D6772;
+    --brass:#A9814A;
+    --brass-soft:#C8A97A;
+    --line:rgba(23,32,42,.13);
+    --line-strong:rgba(23,32,42,.26);
+
+    /* 고딕 단일 서체 체계 — 표제·워드마크·인용 모두 같은 계열 */
+    --sans:"Pretendard Variable",Pretendard,"Noto Sans KR",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+
+    --gutter:clamp(20px,5vw,64px);
+    --section:clamp(72px,9vw,136px);
+    --measure:64ch;
+  }
+
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--ivory);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-weight:300;
+    font-size:clamp(15px,1.02vw,16.5px);
+    line-height:1.85;
+    letter-spacing:-0.005em;
+    word-break:keep-all;
+    overflow-wrap:break-word;
+    text-wrap:pretty;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *{animation:none!important;transition:none!important}
+  }
+
+  a{color:inherit;text-decoration:none}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:2px}
+  h1,h2,h3,h4{margin:0;font-weight:400;letter-spacing:-0.02em}
+  p{margin:0}
+  ul,ol{margin:0;padding:0;list-style:none}
+  ::selection{background:rgba(169,129,74,.24)}
+
+  .skip{
+    position:absolute;left:-9999px;top:0;z-index:100;
+    background:var(--ink);color:var(--ivory);padding:.7em 1.1em;
+  }
+  .skip:focus{left:12px;top:12px}
+
+  .wrap{max-width:1180px;margin:0 auto;padding-inline:var(--gutter)}
+  .wrap-narrow{max-width:860px;margin:0 auto;padding-inline:var(--gutter)}
+
+  /* ── 공통 타이포 ─────────────────────────────────────── */
+  .eyebrow{
+    display:flex;align-items:center;gap:.85em;
+    font-family:var(--sans);font-size:.72rem;font-weight:500;
+    letter-spacing:.26em;text-transform:uppercase;color:var(--brass);
+  }
+  .eyebrow::after{content:"";flex:1;height:1px;background:var(--line);max-width:120px}
+  .eyebrow .num{font-family:var(--sans);font-weight:700;letter-spacing:.06em;font-size:.78rem;font-variant-numeric:tabular-nums}
+
+  .h-section{
+    font-family:var(--sans);font-weight:700;font-size:clamp(1.72rem,3.4vw,2.6rem);
+    line-height:1.38;letter-spacing:-0.045em;margin-top:.66em;
+  }
+  .lead{font-size:clamp(1rem,1.35vw,1.12rem);line-height:1.95;color:var(--ink-70)}
+  .muted{color:var(--ink-50)}
+
+  /* ── 헤더 ───────────────────────────────────────────── */
+  .site-header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(246,243,236,.86);
+    backdrop-filter:saturate(150%) blur(14px);
+    -webkit-backdrop-filter:saturate(150%) blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .header-inner{
+    max-width:1320px;margin:0 auto;
+    padding:14px var(--gutter);
+    display:flex;align-items:center;justify-content:space-between;gap:24px;
+  }
+  .brand{display:flex;align-items:center;gap:12px;min-width:0}
+  .brand-mark{
+    width:34px;height:34px;flex:0 0 34px;border-radius:50%;
+    background:var(--ink);color:var(--ivory);
+    display:grid;place-items:center;
+    font-family:var(--sans);font-weight:800;font-size:1rem;line-height:1;
+    padding-bottom:1px;
+  }
+  .brand-text{display:flex;flex-direction:column;line-height:1.15}
+  .brand-name{
+    font-family:var(--sans);font-weight:700;font-size:1.06rem;letter-spacing:.18em;
+  }
+  .brand-sub{
+    font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-50);
+    margin-top:3px;
+  }
+  .nav{display:flex;align-items:center;gap:clamp(16px,2.2vw,32px)}
+  .nav a{
+    font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-70);
+    padding:.4em 0;position:relative;transition:color .25s ease;
+  }
+  .nav a::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+    background:var(--brass);transform:scaleX(0);transform-origin:left;
+    transition:transform .3s ease;
+  }
+  .nav a:hover{color:var(--ink)}
+  .nav a:hover::after{transform:scaleX(1)}
+  .nav a.btn::after{display:none}
+  .nav a.btn-solid{color:var(--ivory)}
+  .nav a.btn-solid:hover{color:#fff}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:.6em;
+    font-family:var(--sans);font-size:.82rem;font-weight:500;letter-spacing:.06em;
+    padding:.86em 1.5em;border:1px solid transparent;border-radius:2px;
+    transition:background-color .25s ease,color .25s ease,border-color .25s ease,transform .25s ease;
+  }
+  .btn-solid{background:var(--ink);color:var(--ivory)}
+  .btn-solid:hover{background:var(--brass);color:#fff;transform:translateY(-1px)}
+  .btn-ghost{border-color:var(--line-strong);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--ink);background:rgba(23,32,42,.04)}
+  .btn .arrow{font-size:.9em;transform:translateY(-.5px)}
+
+  @media (max-width:880px){
+    .header-inner{flex-wrap:wrap;row-gap:0;padding-block:10px 0;row-gap:6px}
+    .brand-name{font-size:1rem;letter-spacing:.18em}
+    .nav{width:100%;order:3;gap:20px;border-top:1px solid var(--line);padding-block:9px 2px}
+    .nav a{font-size:.72rem;letter-spacing:.1em}
+    .nav .btn{margin-left:auto;padding:.55em 1em;font-size:.7rem}
+  }
+
+  /* ── 히어로 ─────────────────────────────────────────── */
+  .hero{
+    position:relative;overflow:hidden;
+    padding:clamp(56px,9vw,116px) 0 clamp(48px,7vw,96px);
+    text-align:center;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(1100px 520px at 50% -12%, rgba(255,255,255,.85), transparent 70%),
+      radial-gradient(700px 420px at 88% 8%, rgba(200,169,122,.13), transparent 72%);
+    pointer-events:none;
+  }
+  .hero-inner{position:relative}
+  .staff{
+    display:block;width:min(680px,78vw);height:auto;margin:0 auto clamp(26px,3.6vw,44px);
+    color:var(--ink);opacity:.16;pointer-events:none;
+  }
+  @media (max-width:560px){.staff{width:100%;opacity:.13;margin-bottom:22px}}
+  .hero-kicker{
+    display:inline-flex;align-items:center;gap:.9em;flex-wrap:wrap;justify-content:center;
+    font-size:.74rem;font-weight:500;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--brass);
+  }
+  .hero-kicker .dot{width:4px;height:4px;border-radius:50%;background:var(--brass-soft);display:inline-block}
+  .hero-kicker .ko{color:var(--ink-50);letter-spacing:.12em;text-transform:none;font-weight:400}
+
+  .wordmark{
+    font-family:var(--sans);font-weight:800;
+    font-size:clamp(3.3rem,12vw,7.9rem);
+    line-height:.94;letter-spacing:-0.025em;
+    margin:clamp(18px,3vw,30px) 0 0;
+    text-indent:0;
+  }
+  .wordmark-sub{
+    font-family:var(--sans);font-style:normal;font-weight:500;
+    font-size:clamp(.76rem,1.1vw,.9rem);letter-spacing:.28em;text-transform:uppercase;
+    color:var(--ink-50);margin-top:1.05em;
+  }
+  .hero h1{
+    font-family:var(--sans);font-weight:700;
+    font-size:clamp(1.5rem,3.4vw,2.42rem);line-height:1.46;letter-spacing:-0.045em;
+    margin:clamp(30px,4.6vw,46px) auto 0;max-width:19em;
+  }
+  .hero h1 .thin{color:var(--ink-70);font-weight:500;letter-spacing:-0.03em}
+  .hero .lead{max-width:36em;margin:clamp(18px,2.6vw,26px) auto 0;color:var(--ink-70)}
+  .hero-actions{
+    display:flex;flex-wrap:wrap;gap:12px;justify-content:center;
+    margin-top:clamp(28px,4vw,40px);
+  }
+  .hero-meta{
+    margin-top:clamp(26px,3.6vw,38px);
+    font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-50);
+  }
+  /* 각 항목은 한 덩어리로 유지하고, 구분점(·)은 앞 항목 끝에 붙여 두어
+     줄바꿈 시 구분점이 다음 줄 첫 글자로 떨어지지 않게 한다 */
+  .hero-meta span{display:inline-block;white-space:nowrap}
+  .hero-meta span:not(:last-child)::after{content:"\00a0·";margin:0 .85em 0 .55em;color:var(--brass-soft)}
+
+  /* ── 스트립 ─────────────────────────────────────────── */
+  .strip{
+    border-block:1px solid var(--line);
+    background:linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,255,255,0));
+  }
+  .strip-inner{
+    display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(18px,4vw,56px);
+    padding:18px var(--gutter);
+    font-family:var(--sans);font-weight:400;font-size:.86rem;letter-spacing:.012em;color:var(--ink-70);
+  }
+  .strip-inner li{display:flex;align-items:baseline;gap:.6em;white-space:nowrap}
+  .strip-inner .k{font-family:var(--sans);font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--brass)}
+
+  /* ── 섹션 ───────────────────────────────────────────── */
+  section{position:relative}
+  .band{padding-block:var(--section)}
+
+  .about-grid{
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
+    gap:clamp(32px,6vw,88px);align-items:start;margin-top:clamp(34px,4.5vw,56px);
+  }
+  @media (max-width:900px){.about-grid{grid-template-columns:1fr;gap:34px}}
+  .about-copy p+p{margin-top:1.1em}
+  .about-quote{
+    font-family:var(--sans);font-weight:600;font-size:clamp(1.06rem,1.7vw,1.3rem);
+    line-height:1.62;letter-spacing:-0.035em;color:var(--ink);
+    border-left:2px solid var(--brass);padding-left:1.15em;margin-bottom:1.5em;
+  }
+  .credentials{
+    border-top:1px solid var(--line);margin-top:clamp(28px,3.4vw,40px);
+  }
+  .credentials li{
+    display:grid;grid-template-columns:12.5em minmax(0,1fr);gap:1.1em;
+    padding:.85em 0;border-bottom:1px solid var(--line);
+    font-size:.92rem;line-height:1.65;
+  }
+  .credentials .k{
+    font-size:.66rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--brass);padding-top:.35em;
+  }
+  .credentials .v{color:var(--ink-70)}
+  @media (max-width:560px){
+    .credentials li{grid-template-columns:1fr;gap:.25em}
+    .credentials .k{padding-top:0}
+  }
+
+  /* ── 독자 카드 ──────────────────────────────────────── */
+  .for-grid{
+    display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:1px;background:var(--line);border:1px solid var(--line);
+    margin-top:clamp(30px,4vw,48px);
+  }
+  @media (max-width:860px){.for-grid{grid-template-columns:1fr}}
+  .for-card{
+    background:var(--ivory);padding:clamp(24px,3vw,36px);
+    display:flex;flex-direction:column;gap:.7em;
+  }
+  .for-card .idx{
+    font-family:var(--sans);font-weight:700;font-size:.9rem;letter-spacing:.08em;color:var(--brass);
+  }
+  .for-card h3{font-family:var(--sans);font-weight:700;font-size:1.04rem;line-height:1.5;letter-spacing:-0.03em}
+  .for-card p{font-size:.92rem;color:var(--ink-70);line-height:1.85}
+
+  /* ── 교재 ───────────────────────────────────────────── */
+  .books-head{
+    display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;
+    gap:24px;margin-bottom:clamp(30px,4vw,48px);
+  }
+  .books-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,286px),1fr));
+    gap:clamp(18px,2.2vw,28px);
+  }
+  .book{
+    display:flex;flex-direction:column;
+    background:var(--paper);border:1px solid var(--line);
+    transition:border-color .3s ease,transform .3s ease,box-shadow .3s ease;
+  }
+  .book:hover{
+    border-color:var(--brass-soft);transform:translateY(-3px);
+    box-shadow:0 18px 40px -28px rgba(23,32,42,.45);
+  }
+  .cover{
+    position:relative;aspect-ratio:4/5;overflow:hidden;
+    background:linear-gradient(155deg,#F2EEE4 0%,#E8E2D3 58%,#DFD7C5 100%);
+    border-bottom:1px solid var(--line);
+    display:flex;flex-direction:column;justify-content:space-between;
+    padding:clamp(18px,2vw,24px);
+    text-align:center;
+  }
+  .cover::after{
+    content:"";position:absolute;inset:10px;border:1px solid rgba(23,32,42,.14);pointer-events:none;
+  }
+  .cover-top{
+    font-family:var(--sans);font-size:.58rem;letter-spacing:.3em;text-transform:uppercase;
+    color:rgba(23,32,42,.55);position:relative;z-index:1;
+  }
+  .cover-title{
+    font-family:var(--sans);font-weight:700;
+    font-size:clamp(1.04rem,1.45vw,1.2rem);line-height:1.5;letter-spacing:-0.035em;
+    padding-inline:.4em;position:relative;z-index:1;
+  }
+  .cover-title .lat{font-family:var(--sans);font-weight:700;letter-spacing:-0.02em}
+  .cover-rule{
+    width:38px;height:1px;background:var(--brass);margin:.95em auto 0;position:relative;z-index:1;
+  }
+  .cover-bottom{
+    font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(23,32,42,.5);
+    position:relative;z-index:1;
+  }
+  .book-body{
+    padding:clamp(18px,2.2vw,24px);display:flex;flex-direction:column;gap:.65em;flex:1;
+  }
+  .tag{
+    align-self:flex-start;font-size:.62rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--brass);border:1px solid rgba(169,129,74,.4);padding:.35em .7em;border-radius:2px;
+  }
+  .book h3{font-family:var(--sans);font-weight:700;font-size:1.01rem;line-height:1.58;letter-spacing:-0.03em}
+  .book .desc{font-size:.88rem;color:var(--ink-70);line-height:1.8}
+  .book .meta{
+    margin-top:auto;padding-top:.9em;border-top:1px solid var(--line);
+    display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.5em;
+    font-size:.72rem;letter-spacing:.06em;color:var(--ink-50);
+  }
+  .book .meta .where{text-transform:uppercase;letter-spacing:.16em;font-size:.66rem}
+  .book .meta a{
+    color:var(--ink);border-bottom:1px solid var(--brass-soft);padding-bottom:1px;
+    transition:color .25s ease,border-color .25s ease;
+  }
+  .book .meta a:hover{color:var(--brass);border-color:var(--brass)}
+
+  .book-more{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6em;
+    text-align:center;padding:clamp(28px,3.4vw,40px);
+    background:transparent;border:1px dashed var(--line-strong);
+    transition:border-color .3s ease,background-color .3s ease;
+  }
+  .book-more:hover{border-color:var(--brass);background:rgba(169,129,74,.05)}
+  .book-more .kind{font-size:.62rem;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--brass)}
+  .book-more h3{font-family:var(--sans);font-weight:700;font-size:1.08rem;line-height:1.5;letter-spacing:-0.03em;margin-top:.2em}
+  .book-more p{font-size:.88rem;color:var(--ink-70);line-height:1.8;max-width:22em}
+  .book-more .go{
+    margin-top:.5em;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;
+    display:inline-flex;align-items:center;gap:.5em;
+  }
+  .book-more:hover .go .arrow{transform:translateX(4px)}
+  .book-more .go .arrow{transition:transform .3s ease}
+
+  @media (max-width:560px){
+    .cover{aspect-ratio:16/10}
+    .cover-title{font-size:1.16rem}
+  }
+
+  .books-foot{
+    margin-top:clamp(26px,3.4vw,38px);
+    display:flex;flex-wrap:wrap;gap:.6em 1.4em;align-items:baseline;justify-content:space-between;
+    font-size:.88rem;color:var(--ink-50);
+  }
+  .books-foot .series{font-family:var(--sans);font-weight:400;color:var(--ink-70)}
+
+  /* ── 채널 ───────────────────────────────────────────── */
+  .channels{background:linear-gradient(180deg,rgba(255,255,255,.5),rgba(235,230,218,.45));border-block:1px solid var(--line)}
+  .channel-grid{
+    display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2.4vw,28px);
+    margin-top:clamp(30px,4vw,48px);
+  }
+  @media (max-width:860px){.channel-grid{grid-template-columns:1fr}}
+  .channel{
+    display:flex;flex-direction:column;gap:.6em;padding:clamp(22px,2.6vw,32px);
+    background:var(--paper);border:1px solid var(--line);
+    transition:border-color .3s ease,background-color .3s ease,transform .3s ease;
+  }
+  .channel:hover{border-color:var(--brass-soft);transform:translateY(-2px)}
+  .channel .kind{
+    font-size:.62rem;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--brass);
+  }
+  .channel h3{font-family:var(--sans);font-weight:700;font-size:1.1rem;line-height:1.45;letter-spacing:-0.03em}
+  .channel p{font-size:.9rem;color:var(--ink-70);line-height:1.8}
+  .channel .go{
+    margin-top:.4em;font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);
+    display:inline-flex;align-items:center;gap:.5em;
+  }
+  .channel .go .arrow{transition:transform .3s ease}
+  .channel:hover .go .arrow{transform:translateX(4px)}
+
+  /* ── 마무리 ─────────────────────────────────────────── */
+  .closing{
+    background:var(--ink);color:var(--ivory);
+    padding-block:clamp(64px,8vw,110px);position:relative;overflow:hidden;
+  }
+  .closing::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(700px 320px at 18% 0%,rgba(200,169,122,.16),transparent 70%);
+    pointer-events:none;
+  }
+  .closing-inner{position:relative;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:clamp(28px,5vw,64px);align-items:center}
+  @media (max-width:820px){.closing-inner{grid-template-columns:1fr;gap:26px}}
+  .closing h2{
+    font-family:var(--sans);font-weight:700;font-size:clamp(1.5rem,3vw,2.15rem);line-height:1.46;letter-spacing:-0.045em;
+  }
+  .closing p{margin-top:.9em;color:rgba(246,243,236,.72);font-size:.96rem;max-width:34em}
+  .closing-actions{display:flex;flex-direction:column;gap:10px}
+  .closing .btn-solid{background:var(--ivory);color:var(--ink)}
+  .closing .btn-solid:hover{background:var(--brass);color:#fff}
+  .closing .btn-ghost{border-color:rgba(246,243,236,.32);color:var(--ivory)}
+  .closing .btn-ghost:hover{background:rgba(246,243,236,.08);border-color:rgba(246,243,236,.6)}
+  .closing .note{
+    font-size:.76rem;letter-spacing:.04em;color:rgba(246,243,236,.55);line-height:1.8;
+  }
+
+  /* ── 푸터 ───────────────────────────────────────────── */
+  .site-footer{background:var(--ink);color:rgba(246,243,236,.66);border-top:1px solid rgba(246,243,236,.12)}
+  .footer-inner{
+    padding-block:clamp(38px,4.6vw,56px) 30px;display:grid;
+    grid-template-columns:minmax(0,1.4fr) repeat(2,minmax(0,.6fr));gap:clamp(24px,4vw,48px);
+  }
+  @media (max-width:760px){.footer-inner{grid-template-columns:1fr;gap:26px}}
+  .footer-brand .brand-name{color:var(--ivory);font-size:1rem;letter-spacing:.18em}
+  .footer-brand p{margin-top:.9em;font-size:.86rem;line-height:1.85;max-width:30em;color:rgba(246,243,236,.6)}
+  .footer-col h4{
+    font-family:var(--sans);font-size:.62rem;font-weight:500;letter-spacing:.26em;
+    text-transform:uppercase;color:var(--brass-soft);margin-bottom:.9em;
+  }
+  .footer-col li+li{margin-top:.5em}
+  .footer-col a{font-size:.88rem;color:rgba(246,243,236,.78);transition:color .25s ease}
+  .footer-col a:hover{color:var(--ivory)}
+  .footer-legal{
+    border-top:1px solid rgba(246,243,236,.12);
+    padding-block:18px;display:flex;flex-wrap:wrap;gap:.6em 1.4em;justify-content:space-between;
+    font-size:.74rem;letter-spacing:.06em;color:rgba(246,243,236,.45);
+  }
+
+  @media print{
+    .site-header,.closing,.strip{display:none}
+    body{background:#fff;color:#000}
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="#top" aria-label="TONIC — 피아노치는 교회오빠, 맨 위로">
+      <span class="brand-mark" aria-hidden="true">T</span>
+      <span class="brand-text">
+        <span class="brand-name">TONIC</span>
+        <span class="brand-sub">Music Publishing</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a href="#about">소개</a>
+      <a href="#books">교재 · 악보</a>
+      <a href="#channels">채널</a>
+      <a class="btn btn-solid" href="https://smartstore.naver.com/tonicmusic" target="_blank" rel="noopener">스마트스토어 <span class="arrow" aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <!-- 히어로 -->
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <svg class="staff" viewBox="0 0 760 120" fill="none" aria-hidden="true" focusable="false">
+      <g stroke="currentColor" stroke-width="1">
+        <path d="M0 20H760"/><path d="M0 40H760"/><path d="M0 60H760"/><path d="M0 80H760"/><path d="M0 100H760"/>
+      </g>
+      <g fill="currentColor">
+        <ellipse cx="196" cy="76" rx="9" ry="6.4" transform="rotate(-18 196 76)"/>
+        <ellipse cx="292" cy="56" rx="9" ry="6.4" transform="rotate(-18 292 56)"/>
+        <ellipse cx="388" cy="66" rx="9" ry="6.4" transform="rotate(-18 388 66)"/>
+        <ellipse cx="560" cy="46" rx="9" ry="6.4" transform="rotate(-18 560 46)"/>
+      </g>
+      <g stroke="currentColor" stroke-width="1.6">
+        <path d="M204 76V34"/><path d="M300 56V14"/><path d="M396 66V24"/><path d="M568 46V4"/>
+      </g>
+    </svg>
+
+    <div class="wrap hero-inner">
+      <p class="hero-kicker">
+        <span>TONIC</span><span class="dot" aria-hidden="true"></span><span class="ko">피아노치는 교회오빠</span>
+      </p>
+
+      <p class="wordmark" aria-hidden="true">TONIC</p>
+      <p class="wordmark-sub">Music Publishing · Est. 2011</p>
+
+      <h1 id="hero-title">
+        음악교과서 편집자가 만드는<br />
+        <span class="thin">실전 음악 교재와 악보</span>
+      </h1>
+
+      <p class="lead">
+        실용음악과 음악교과서를 편집해 온 경험으로, 독학자와 예배 반주자가
+        바로 써먹을 수 있는 화성학 · 코드표 · 반주 교재를 만듭니다.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-solid" href="https://smartstore.naver.com/tonicmusic" target="_blank" rel="noopener">교재 둘러보기 <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-ghost" href="#books">대표 교재 보기</a>
+      </div>
+
+      <p class="hero-meta">
+        <span>Est. 2011</span><span>실용음악 · CCM · 예배반주</span><span>교재 · 디지털 악보</span>
+      </p>
+    </div>
+  </section>
+
+  <div class="strip" aria-label="토닉이 다루는 분야">
+    <ul class="strip-inner">
+      <li><span class="k">Field</span> 재즈 화성학</li>
+      <li><span class="k">Field</span> CCM · 예배반주</li>
+      <li><span class="k">Field</span> 코드표 · 스케일표</li>
+      <li><span class="k">Field</span> 기타 · 피아노 · 우쿨렐레 · 칼림바</li>
+    </ul>
+  </div>
+
+  <!-- 소개 -->
+  <section class="band" id="about" aria-labelledby="about-title">
+    <div class="wrap">
+      <p class="eyebrow"><span class="num">01</span> 소개</p>
+      <div class="about-grid">
+        <div>
+          <h2 class="h-section" id="about-title">
+            악보를 만들던 사람이,<br />이제 교재를 씁니다
+          </h2>
+          <p class="muted" style="margin-top:1.2em;font-size:.92rem;line-height:1.9;max-width:23em">
+            원고를 다루던 손으로 직접 쓰고, 편집하고, 다시 고칩니다.<br />
+            한 권을 끝까지 쓸 수 있도록 만드는 것이 토닉의 방식입니다.
+          </p>
+        </div>
+
+        <div class="about-copy">
+          <p class="about-quote">
+            “음악은 재미있는 것인데, 어렵게만 설명하는 교재가 늘 아쉬웠습니다.”
+          </p>
+          <p class="lead">
+            토닉은 음악용어 ‘으뜸화음(tonic)’에서 이름을 가져온 1인 음악출판 브랜드입니다.
+            2011년부터 실용음악과 CCM, 예배 반주를 위한 교재와 악보를 만들어 왔습니다.
+          </p>
+          <p class="lead">
+            그 전에는 음악출판사에서 편집자로 일하며 악보의 마디를 고치고 설명을 다듬었고,
+            음악교과서를 만드는 일에도 참여했습니다. 배우는 사람이 어디에서 멈추는지를
+            가까이서 지켜본 시간이 지금의 교재를 만듭니다.
+          </p>
+
+          <ul class="credentials" aria-label="경력">
+            <li><span class="k">Since 2011</span><span class="v">토닉(TONIC) 운영 · 음악 교재와 악보 출판</span></li>
+            <li><span class="k">Editor</span><span class="v">음악출판사 편집자 · 음악교과서 편집 경력</span></li>
+            <li><span class="k">Study</span><span class="v">서울재즈아카데미 작편곡과 · 재즈피아노과 수료</span></li>
+            <li><span class="k">Study</span><span class="v">백석대학교 대학원 작곡과 수료</span></li>
+            <li><span class="k">Books</span><span class="v">『어드밴스드 CCM 피아노』, 『셀프스터디 재즈피아노』 시리즈 등</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="for-grid">
+        <article class="for-card">
+          <p class="idx" aria-hidden="true">I</p>
+          <h3>혼자 시작하는 독학자</h3>
+          <p>어디서 막히는지 아는 순서로 정리했습니다. 앞 장을 이해하면 다음 장이 자연스럽게 이어집니다.</p>
+        </article>
+        <article class="for-card">
+          <p class="idx" aria-hidden="true">II</p>
+          <h3>예배를 반주하는 사람</h3>
+          <p>주일에 바로 쓸 수 있는 코드와 리듬 중심. 이론을 위한 이론은 덜어냈습니다.</p>
+        </article>
+        <article class="for-card">
+          <p class="idx" aria-hidden="true">III</p>
+          <h3>가르치는 사람</h3>
+          <p>수업에 그대로 꺼내 쓸 수 있는 코드표와 스케일표. 설명을 대신해 주는 표로 만들었습니다.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 교재 -->
+  <section class="band" id="books" aria-labelledby="books-title" style="padding-top:0">
+    <div class="wrap">
+      <p class="eyebrow"><span class="num">02</span> 교재 · 디지털 악보</p>
+      <div class="books-head">
+        <h2 class="h-section" id="books-title">대표 교재</h2>
+        <p class="muted" style="font-size:.86rem;max-width:26em;margin:0">
+          종이책과 PDF 전자책으로 만날 수 있습니다. 디지털 교재는 결제 후 스마트스토어 톡톡으로 파일을 보내드립니다.
+        </p>
+      </div>
+
+      <div class="books-grid">
+        <article class="book">
+          <div class="cover" aria-hidden="true">
+            <p class="cover-top">TONIC · Harmony</p>
+            <div>
+              <p class="cover-title">독학<br />재즈화성학</p>
+              <div class="cover-rule"></div>
+            </div>
+            <p class="cover-bottom">Digital PDF</p>
+          </div>
+          <div class="book-body">
+            <span class="tag">화성학</span>
+            <h3>독학 재즈화성학</h3>
+            <p class="desc">코드 진행의 원리부터 실제 곡에 적용하는 법까지, 혼자 공부하는 사람의 순서로 만든 재즈 화성학.</p>
+            <p class="meta"><span class="where">스마트스토어 · PDF</span><a href="https://smartstore.naver.com/tonicmusic" target="_blank" rel="noopener">보기 ↗</a></p>
+          </div>
+        </article>
+
+        <article class="book">
+          <div class="cover" aria-hidden="true">
+            <p class="cover-top">TONIC · CCM</p>
+            <div>
+              <p class="cover-title">어드밴스드<br />CCM 화성학</p>
+              <div class="cover-rule"></div>
+            </div>
+            <p class="cover-bottom">Digital PDF</p>
+          </div>
+          <div class="book-body">
+            <span class="tag">CCM 반주</span>
+            <h3>어드밴스드 CCM 화성학</h3>
+            <p class="desc">예배 반주에 필요한 텐션과 보이싱을 CCM 곡으로 익히는 실전 화성학. 반주가 한 단계 깊어집니다.</p>
+            <p class="meta"><span class="where">스마트스토어 · PDF</span><a href="https://smartstore.naver.com/tonicmusic" target="_blank" rel="noopener">보기 ↗</a></p>
+          </div>
+        </article>
+
+        <article class="book">
+          <div class="cover" aria-hidden="true">
+            <p class="cover-top">TONIC · Chart</p>
+            <div>
+              <p class="cover-title">코드표 &amp;<br />스케일표</p>
+              <div class="cover-rule"></div>
+            </div>
+            <p class="cover-bottom">Guitar · Piano · Ukulele · Kalimba</p>
+          </div>
+          <div class="book-body">
+            <span class="tag">코드표</span>
+            <h3>통기타 · 피아노 · 우쿨렐레 · 칼림바 코드표 &amp; 스케일표</h3>
+            <p class="desc">네 악기의 코드와 스케일을 한 번에 정리했습니다. 레슨 자료로도, 혼자 칠 때의 책상 위에도.</p>
+            <p class="meta"><span class="where">스마트스토어 · PDF</span><a href="https://smartstore.naver.com/tonicmusic" target="_blank" rel="noopener">보기 ↗</a></p>
+          </div>
+        </article>
+
+        <article class="book">
+          <div class="cover" aria-hidden="true">
+            <p class="cover-top">TONIC · Guitar</p>
+            <div>
+              <p class="cover-title">트라이어드와<br />락킹주법</p>
+              <div class="cover-rule"></div>
+            </div>
+            <p class="cover-bottom">박건태 지음 · 종이책</p>
+          </div>
+          <div class="book-body">
+            <span class="tag">일렉기타</span>
+            <h3>CCM 일렉기타 예배반주법 : 트라이어드와 락킹주법</h3>
+            <p class="desc">트라이어드와 락킹 주법으로 예배 반주를 구성하는 방법. 박건태 저, 토닉 출판.</p>
+            <p class="meta"><span class="where">알라딘 · 종이책</span><a href="https://www.aladin.co.kr/search/wsearchresult.aspx?SearchWord=%ED%8A%B8%EB%9D%BC%EC%9D%B4%EC%96%B4%EB%93%9C%EC%99%80+%EB%9D%BD%ED%82%B9%EC%A3%BC%EB%B2%95" target="_blank" rel="noopener">보기 ↗</a></p>
+          </div>
+        </article>
+
+        <article class="book">
+          <div class="cover" aria-hidden="true">
+            <p class="cover-top">TONIC · English Edition</p>
+            <div>
+              <p class="cover-title"><span class="lat">Self learning<br />Jazz Harmony</span></p>
+              <div class="cover-rule"></div>
+            </div>
+            <p class="cover-bottom">Kindle · Apple Books</p>
+          </div>
+          <div class="book-body">
+            <span class="tag">English</span>
+            <h3>Self learning Jazz Harmony</h3>
+            <p class="desc">『독학 재즈화성학』 영문판. 아마존 킨들과 애플 북스에서 전자책으로 볼 수 있습니다.</p>
+            <p class="meta"><span class="where">Amazon · Apple Books</span><a href="https://www.amazon.com/s?k=Self+learning+Jazz+Harmony" target="_blank" rel="noopener">보기 ↗</a></p>
+          </div>
+        </article>
+
+        <a class="book-more" href="https://smartstore.naver.com/tonicmusic" target="_blank" rel="noopener">
+          <span class="kind">All Titles</span>
+          <h3>교재 전체 보기</h3>
+          <p>스마트스토어에서 디지털 교재와 종이책을 한자리에서 볼 수 있습니다.</p>
+          <span class="go">스마트스토어 열기 <span class="arrow" aria-hidden="true">→</span></span>
+        </a>
+      </div>
+
+      <div class="books-foot">
+        <p class="series">그 외에 『셀프스터디 재즈피아노』, 『어드밴스드 CCM 피아노』 시리즈 등 실용음악 교재를 펴냈습니다.</p>
+        <p class="muted" style="font-size:.8rem">* 디지털 교재는 PDF로 제공됩니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 채널 -->
+  <section class="band channels" id="channels" aria-labelledby="channels-title">
+    <div class="wrap">
+      <p class="eyebrow"><span class="num">03</span> 채널</p>
+      <h2 class="h-section" id="channels-title">교재는 스토어에서,<br />이야기는 블로그에서</h2>
+
+      <div class="channel-grid">
+        <a class="channel" href="https://smartstore.naver.com/tonicmusic" target="_blank" rel="noopener">
+          <span class="kind">Store</span>
+          <h3>네이버 스마트스토어</h3>
+          <p>교재와 코드표를 PDF로 바로 구매할 수 있습니다. 결제 후 톡톡으로 파일을 보내드립니다.</p>
+          <span class="go">스토어 열기 <span class="arrow" aria-hidden="true">→</span></span>
+        </a>
+        <a class="channel" href="https://blog.naver.com/visionar" target="_blank" rel="noopener">
+          <span class="kind">Blog</span>
+          <h3>피아노치는 교회오빠</h3>
+          <p>코드와 반주에 관한 글, 교재 미리보기, 예배 반주 이야기를 꾸준히 올립니다.</p>
+          <span class="go">블로그 열기 <span class="arrow" aria-hidden="true">→</span></span>
+        </a>
+        <a class="channel" href="https://www.youtube.com/@%EA%B9%80%EC%A0%95%EC%9D%B8-z6w" target="_blank" rel="noopener">
+          <span class="kind">YouTube</span>
+          <h3>유튜브 @김정인</h3>
+          <p>반주가 막힐 때 보는 영상. 코드 보이싱과 예배 반주를 화면으로 확인하세요.</p>
+          <span class="go">채널 열기 <span class="arrow" aria-hidden="true">→</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 마무리 -->
+  <section class="closing" aria-labelledby="closing-title">
+    <div class="wrap closing-inner">
+      <div>
+        <h2 id="closing-title">음악을 더 쉽게 배우는 일에,<br />편집자의 습관을 담았습니다</h2>
+        <p>어떤 교재를 먼저 봐야 할지 모르겠다면, 스마트스토어 톡톡으로 편하게 물어보세요. 지금 배우는 단계에 맞는 책을 안내해 드립니다.</p>
+      </div>
+      <div class="closing-actions">
+        <a class="btn btn-solid" href="https://smartstore.naver.com/tonicmusic" target="_blank" rel="noopener">스마트스토어에서 만나기 <span class="arrow" aria-hidden="true">↗</span></a>
+        <a class="btn btn-ghost" href="https://blog.naver.com/visionar" target="_blank" rel="noopener">블로그 '피아노치는 교회오빠'</a>
+        <p class="note">TONIC · 피아노치는 교회오빠<br />Since 2011</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <p class="brand-name">TONIC</p>
+        <p>음악교과서 편집자가 만드는 실전 음악 교재와 악보.<br />실용음악과 CCM, 예배 반주를 위한 책을 만듭니다.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Menu</h4>
+        <ul>
+          <li><a href="#about">소개</a></li>
+          <li><a href="#books">교재 · 악보</a></li>
+          <li><a href="#channels">채널</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="https://smartstore.naver.com/tonicmusic" target="_blank" rel="noopener">스마트스토어 톡톡</a></li>
+          <li><a href="https://blog.naver.com/visionar" target="_blank" rel="noopener">네이버 블로그</a></li>
+          <li><a href="https://www.youtube.com/@%EA%B9%80%EC%A0%95%EC%9D%B8-z6w" target="_blank" rel="noopener">유튜브</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <span>© 2026 TONIC. All rights reserved.</span>
+      <span>피아노치는 교회오빠 · Since 2011</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
